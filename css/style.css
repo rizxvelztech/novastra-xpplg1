@@ -401,6 +401,8 @@ section {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     background: white;
     z-index: 1;
+    flex-shrink: 0;
+    aspect-ratio: 1 / 1;
 }
 
 .anggota-foto-wrapper:hover {
@@ -728,6 +730,13 @@ footer strong { color: #444; font-weight: 600; }
         padding: 0.35rem 0.8rem;
         margin-top: 0.4rem;
     }
+    
+    .anggota-foto-wrapper {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    aspect-ratio: 1 / 1;
+}
 
     .wali-card { padding: 1.8rem 1.2rem; max-width: 300px; }
     .wali-foto-wrapper { width: 140px; height: 140px; }
