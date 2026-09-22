@@ -41,7 +41,7 @@ function getDefaultData() {
             { id: 38, nama: 'Ripal Destian Muharam', username: 'ripal', kelas: 'X PPLG 1', instagram: 'ripaldestian_muharam' },
             { id: 39, nama: 'Rosita', username: 'rosita', kelas: 'X PPLG 1', instagram: 'rosita' },
             { id: 40, nama: 'Salsa Frika Lusiani', username: 'salsa', kelas: 'X PPLG 1', instagram: 'salsa.frika' },
-            { id: 41, nama: 'Silvia Khoirunisa', username: 'silvia', kelas: 'X PPLG 1', instagram: 'silvia.khr' },
+            { id: 41, nama: 'Silvia Khoirunisa', username: 'silvia', kelas: 'X PPLG 1', instagram: 'appleseil' },
             { id: 42, nama: 'Syaila Aliah', username: 'syaila', kelas: 'X PPLG 1', instagram: 'syaila.aliah' },
             { id: 43, nama: 'Tiara', username: 'tiara', kelas: 'X PPLG 1', instagram: 'tiara' },
             { id: 44, nama: 'Tiara Ramadani', username: 'tiararamadani', kelas: 'X PPLG 1', instagram: 'tiara.ramadani' },
