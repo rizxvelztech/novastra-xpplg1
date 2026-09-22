@@ -6,7 +6,7 @@ function getDefaultData() {
             { id: 3,  nama: 'Afrizal Maulana Herwanto', username: 'afrizal', kelas: 'X PPLG 1', instagram: 'afrizal_m.h' },
             { id: 4,  nama: 'Ahlan Walid Abqary', username: 'ahlan', kelas: 'X PPLG 1', instagram: 'ahlan.walid' },
             { id: 5,  nama: 'Albian Ramadhan Kusuma', username: 'albian', kelas: 'X PPLG 1', instagram: 'albian.rk' },
-            { id: 6,  nama: 'Alifia Dwi Oktaviani', username: 'alifia', kelas: 'X PPLG 1', instagram: 'alifia.dwi' },
+            { id: 6,  nama: 'Alifia Dwi Oktaviani', username: 'alifia', kelas: 'X PPLG 1', instagram: 'adowabels__' },
             { id: 7,  nama: 'Allysa Aulia Hendarto', username: 'aulia', kelas: 'X PPLG 1', instagram: 'urwshiki._' },
             { id: 8,  nama: 'Almaira Azzahra', username: 'almaira', kelas: 'X PPLG 1', instagram: 'almaira.azz' },
             { id: 9,  nama: 'Alvin Ilyaas Syahputra', username: 'alvin', kelas: 'X PPLG 1', instagram: 'alvin.ilyaas' },
@@ -32,7 +32,7 @@ function getDefaultData() {
             { id: 29, nama: 'Livda Laotir Muayis', username: 'livda', kelas: 'X PPLG 1', instagram: 'ivdavv55' },
             { id: 30, nama: 'Mahesa Aditya Rama A.', username: 'mahesa', kelas: 'X PPLG 1', instagram: 'mahesa.adty' },
             { id: 31, nama: "Chaikal Alfajri Sa'bani", username: 'chaikal', kelas: 'X PPLG 1', instagram: 'mhmmdkalls' },
-            { id: 32, nama: 'Deden Kustian Permadi', username: 'deden', kelas: 'X PPLG 1', instagram: 'muhammad.deden' },
+            { id: 32, nama: 'Deden Kustian Permadi', username: 'deden', kelas: 'X PPLG 1', instagram: 'dyncomicwebbton04' },
             { id: 33, nama: 'Nabila Qonita Rafitah', username: 'nabila', kelas: 'X PPLG 1', instagram: 'nabila.qn' },
             { id: 34, nama: 'Nadya Putri', username: 'nadya', kelas: 'X PPLG 1', instagram: 'nadya.putri' },
             { id: 35, nama: 'Novianti', username: 'novianti', kelas: 'X PPLG 1', instagram: 'noviellev' },
@@ -44,7 +44,7 @@ function getDefaultData() {
             { id: 41, nama: 'Silvia Khoirunisa', username: 'silvia', kelas: 'X PPLG 1', instagram: 'appleseil_' },
             { id: 42, nama: 'Syaila Aliah', username: 'syaila', kelas: 'X PPLG 1', instagram: 'syaila.aliah' },
             { id: 43, nama: 'Tiara', username: 'tiara', kelas: 'X PPLG 1', instagram: 'tiara' },
-            { id: 44, nama: 'Tiara Ramadani', username: 'tiararamadani', kelas: 'X PPLG 1', instagram: 'tiara.ramadani' },
+            { id: 44, nama: 'Tiara.R Ramadani', username: 'tiararamadani', kelas: 'X PPLG 1', instagram: 'tiara.ramadani' },
             { id: 45, nama: 'Vida Rahmah', username: 'vida', kelas: 'X PPLG 1', instagram: 'vida.rahmah' },
             { id: 46, nama: 'Wahyu Apriansyah', username: 'wahyu', kelas: 'X PPLG 1', instagram: 'wahyu.apr' }
         ]
