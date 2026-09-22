@@ -34,8 +34,7 @@ function renderAnggota() {
     if (siswaHalaman.length === 0) {
         grid.innerHTML = `
             <div class="empty-result">
-                <p>😕 Murid tidak ditemukan</p>
-                <small>Coba kata kunci lain</small>
+                <small>Student not found in the database.</small>
             </div>
         `;
         document.getElementById('pagination').innerHTML = '';
