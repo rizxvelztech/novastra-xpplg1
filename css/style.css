@@ -182,7 +182,7 @@ section {
 
 .wali-card {
     background: var(--card-bg);
-    border-radius: 20px;
+    border-radius: 15px;
     padding: 2rem 1.5rem;
     max-width: 340px;
     margin: 0 auto;
@@ -307,6 +307,44 @@ section {
     font-style: italic;
     position: relative;
     z-index: 2;
+}
+
+.search-wrapper {
+    position: relative;
+    max-width: 380px;
+    margin: 0 auto 2rem;
+    padding: 0 1rem;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-soft);
+    pointer-events: none;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.85rem 1rem 0.85rem 2.9rem;
+    border: 2px solid var(--border);
+    border-radius: 30px;
+    font-size: 0.95rem;
+    background: var(--card-bg);
+    color: var(--text);
+    transition: all 0.3s ease;
+    outline: none;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+.search-input:focus {
+    border-color: black;
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.25);
+}
+
+.search-input::placeholder {
+    color: #aaa;
 }
 
 .anggota-grid {
@@ -482,6 +520,25 @@ section {
     transform: translateY(1px) scale(0.97);
 }
 
+.empty-result {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-soft);
+}
+
+.empty-result p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.empty-result small {
+    font-size: 0.85rem;
+    font-style: italic;
+    color: #999;
+}
+
 .ripple {
     position: absolute;
     border-radius: 50%;
@@ -499,6 +556,55 @@ section {
     }
 }
 
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+    padding: 0 1rem;
+}
+
+.page-btn {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 0.8rem;
+    border: 2px solid var(--border);
+    background: var(--card-bg);
+    color: var(--text);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.page-btn:hover:not(:disabled) {
+    border-color: var(--gold);
+    background: #fffdf5;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(212, 175, 55, 0.25);
+}
+
+.page-btn.active {
+    background: black;
+    border-color: transparent;
+    color: white;
+    box-shadow: 0 6px 15px white;
+}
+
+.page-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.page-nav {
+    padding: 0 1.2rem;
+    font-size: 0.85rem;
+}
+
 .momen-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -514,7 +620,7 @@ section {
     aspect-ratio: 4 / 3;
     background: #eee;
     border: 1px solid var(--border);
-    cursor: zoom-in;        /* ✅ tambahkan ini */
+    cursor: zoom-in;
 }
 
 .momen-item:hover {
@@ -602,8 +708,8 @@ footer strong { color: #444; font-weight: 600; }
 }
 
 .lightbox img {
-    max-width: 70vw;        /* dari 90vw → 70vw (lebih kecil) */
-    max-height: 60vh;       /* dari 75vh → 60vh */
+    max-width: 70vw;
+    max-height: 60vh;
     border-radius: 8px;
     border: 3px solid #f0e6c8;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
@@ -612,7 +718,7 @@ footer strong { color: #444; font-weight: 600; }
     cursor: default;
     object-fit: contain;
     background: #fff;
-    padding: 6px;           /* ✅ kasih jarak putih di dalam border */
+    padding: 6px;
 }
 
 .lightbox.active img {
@@ -706,6 +812,119 @@ footer strong { color: #444; font-weight: 600; }
     50% { box-shadow: 0 6px 30px rgba(212, 175, 55, 0.9); }
 }
 
+.tentang-section {
+    position: relative;
+    max-width: 100%;
+    padding: 6rem 2rem;
+    overflow: hidden;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tentang-slideshow {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.tentang-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.tentang-slide.active {
+    opacity: 1;
+}
+
+.tentang-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.75) 100%);
+    z-index: 1;
+}
+
+.tentang-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+}
+
+.tentang-heading {
+    color: #ffffff !important;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+.tentang-divider {
+    background: white !important;
+}
+
+.tentang-text {
+    max-width: 700px;
+    margin: 0 auto 2.5rem;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #f0f0f0;
+    padding: 0 1rem;
+    font-family: 'Georgia', serif;
+    font-style: italic;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.tentang-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.stat-box {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 1.2rem 0.8rem;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.stat-box:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 12px 30px rgba(212, 175, 55, 0.5);
+    border-color: var(--gold);
+}
+
+.stat-box h3 {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.3rem;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.stat-box p {
+    font-size: 0.8rem;
+    color: #e8d99a;
+    font-style: italic;
+    letter-spacing: 1px;
+}
+
 @media (max-width: 768px) {
     .hero h1 { font-size: 2.2rem; }
     .hero-logo { width: 140px; height: 140px; }
@@ -714,6 +933,10 @@ footer strong { color: #444; font-weight: 600; }
     .section { padding: 3.5rem 1.2rem; }
     .section-heading { font-size: 1.9rem; }
 
+    .search-wrapper { max-width: 100%; }
+    .search-input { font-size: 0.85rem; padding: 0.7rem 1rem 0.7rem 2.6rem; }
+    .search-icon { left: 1.5rem; width: 16px; height: 16px; }
+
     .anggota-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 0.8rem;
@@ -721,7 +944,12 @@ footer strong { color: #444; font-weight: 600; }
     }
 
     .anggota-card { padding: 1rem 0.5rem 0.8rem; }
-    .anggota-foto-wrapper { width: 110px; height: 110px; }
+    .anggota-foto-wrapper {
+        width: 100px;
+        height: 100px;
+        flex-shrink: 0;
+        aspect-ratio: 1 / 1;
+    }
     .anggota-nama { font-size: 0.85rem; }
     .anggota-kelas { font-size: 0.65rem; }
 
@@ -730,13 +958,24 @@ footer strong { color: #444; font-weight: 600; }
         padding: 0.35rem 0.8rem;
         margin-top: 0.4rem;
     }
-    
-    .anggota-foto-wrapper {
-    width: 100px;
-    height: 100px;
-    flex-shrink: 0;
-    aspect-ratio: 1 / 1;
-}
+
+    .pagination {
+        gap: 0.3rem;
+        margin-top: 2rem;
+    }
+
+    .page-btn {
+        min-width: 34px;
+        height: 34px;
+        font-size: 0.8rem;
+        padding: 0 0.5rem;
+        border-radius: 8px;
+    }
+
+    .page-nav {
+        padding: 0 0.8rem;
+        font-size: 0.75rem;
+    }
 
     .wali-card { padding: 1.8rem 1.2rem; max-width: 300px; }
     .wali-foto-wrapper { width: 140px; height: 140px; }
@@ -745,10 +984,10 @@ footer strong { color: #444; font-weight: 600; }
     .btn-instagram { padding: 0.9rem 1.8rem; font-size: 0.9rem; }
 
     .lightbox img {
-    max-width: 80vw;        /* dari 95vw → 80vw */
-    max-height: 55vh;       /* dari 70vh → 55vh */
-    padding: 5px;
-}
+        max-width: 80vw;
+        max-height: 55vh;
+        padding: 5px;
+    }
 
     .lightbox-close {
         top: 15px;
@@ -763,6 +1002,7 @@ footer strong { color: #444; font-weight: 600; }
         padding: 0.7rem 1rem;
         max-width: 90vw;
     }
+
     .music-btn {
         width: 48px;
         height: 48px;
@@ -773,5 +1013,31 @@ footer strong { color: #444; font-weight: 600; }
     .music-btn svg {
         width: 18px;
         height: 18px;
+    }
+
+    .tentang-section {
+        padding: 4rem 1.2rem;
+        min-height: 420px;
+    }
+
+    .tentang-text {
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+    }
+
+    .tentang-stats {
+        gap: 0.6rem;
+    }
+
+    .stat-box {
+        padding: 1rem 0.5rem;
+    }
+
+    .stat-box h3 {
+        font-size: 1.4rem;
+    }
+
+    .stat-box p {
+        font-size: 0.7rem;
     }
 }
