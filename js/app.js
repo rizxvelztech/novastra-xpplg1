@@ -69,6 +69,22 @@ function tutupFoto() {
     document.body.style.overflow = '';
 }
 
+function toggleMusic() {
+    const music = document.getElementById('bgMusic');
+    const btn = document.getElementById('musicBtn');
+    const icon = document.getElementById('musicIcon');
+
+    if (music.paused) {
+        music.play();
+        btn.classList.add('playing');
+        icon.innerHTML = '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>';
+    } else {
+        music.pause();
+        btn.classList.remove('playing');
+        icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+    }
+}
+
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') tutupFoto();
 });

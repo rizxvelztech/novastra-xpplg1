@@ -7,7 +7,7 @@ function getDefaultData() {
             { id: 4,  nama: 'Ahlan Walid Abqary', username: 'ahlan', kelas: 'X PPLG 1', instagram: 'ahlan.walid' },
             { id: 5,  nama: 'Albian Ramadhan Kusuma', username: 'albian', kelas: 'X PPLG 1', instagram: 'albian.rk' },
             { id: 6,  nama: 'Alifia Dwi Oktaviani', username: 'alifia', kelas: 'X PPLG 1', instagram: 'alifia.dwi' },
-            { id: 7,  nama: 'Allysa Aulia Hendarto', username: 'allysa', kelas: 'X PPLG 1', instagram: 'allysa.aulia' },
+            { id: 7,  nama: 'Allysa Aulia Hendarto', username: 'aulia', kelas: 'X PPLG 1', instagram: 'urwshiki._' },
             { id: 8,  nama: 'Almaira Azzahra', username: 'almaira', kelas: 'X PPLG 1', instagram: 'almaira.azz' },
             { id: 9,  nama: 'Alvin Ilyaas Syahputra', username: 'alvin', kelas: 'X PPLG 1', instagram: 'alvin.ilyaas' },
             { id: 10, nama: 'Ananda Rifqy Arafah', username: 'ananda', kelas: 'X PPLG 1', instagram: 'ananda.rifqy' },
