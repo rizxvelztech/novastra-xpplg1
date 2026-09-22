@@ -659,6 +659,51 @@ footer strong { color: #444; font-weight: 600; }
     background: rgba(255, 255, 255, 0.15);
 }
 
+.music-btn {
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #d4af37, #b8941f);
+    border: 2px solid #f0e6c8;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9998;
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.music-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.7);
+}
+
+.music-btn:active {
+    transform: scale(0.95);
+}
+
+.music-btn svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+    pointer-events: none;
+}
+
+.music-btn.playing {
+    animation: pulseMusic 1.5s infinite;
+}
+
+@keyframes pulseMusic {
+    0%, 100% { box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5); }
+    50% { box-shadow: 0 6px 30px rgba(212, 175, 55, 0.9); }
+}
+
 @media (max-width: 768px) {
     .hero h1 { font-size: 2.2rem; }
     .hero-logo { width: 140px; height: 140px; }
@@ -708,5 +753,16 @@ footer strong { color: #444; font-weight: 600; }
         font-size: 0.95rem;
         padding: 0.7rem 1rem;
         max-width: 90vw;
+    }
+    .music-btn {
+        width: 48px;
+        height: 48px;
+        bottom: 18px;
+        left: 18px;
+    }
+
+    .music-btn svg {
+        width: 18px;
+        height: 18px;
     }
 }
