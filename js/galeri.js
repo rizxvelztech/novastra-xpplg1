@@ -5,6 +5,30 @@ const daftarMomen = [
     { file: 'momen_4.jpg' },
 ];
 
+// ==================== SLIDESHOW TENTANG ====================
+function renderTentangSlideshow() {
+    const slideshow = document.getElementById('tentangSlideshow');
+    if (!slideshow) return;
+
+    if (daftarMomen.length === 0) return;
+
+    // Buat elemen slide untuk setiap momen
+    slideshow.innerHTML = daftarMomen.map((m, i) => `
+        <div class="tentang-slide ${i === 0 ? 'active' : ''}"
+             style="background-image: url('img/${m.file}');"></div>
+    `).join('');
+
+    // Ganti slide setiap 4 detik
+    let currentSlide = 0;
+    const slides = slideshow.querySelectorAll('.tentang-slide');
+
+    setInterval(() => {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }, 4000);
+}
+
 function renderMomen() {
     const grid = document.getElementById('momenGrid');
     if (!grid) return;

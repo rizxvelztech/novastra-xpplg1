@@ -1,12 +1,48 @@
+let halamanSekarang = 1;
+const MURID_PER_HALAMAN = 8;
+let keywordSearch = '';
+
 function renderAnggota() {
     const grid = document.getElementById('anggotaGrid');
     if (!grid) return;
 
-    const siswa = [...appData.siswa].sort((a, b) =>
+    let siswa = [...appData.siswa].sort((a, b) =>
         namaDepan(a.nama).localeCompare(namaDepan(b.nama))
     );
 
-    grid.innerHTML = siswa.map((s, i) => {
+    if (keywordSearch.trim() !== '') {
+        const kw = keywordSearch.toLowerCase();
+        siswa = siswa.filter(s =>
+            s.nama.toLowerCase().includes(kw) ||
+            s.username.toLowerCase().includes(kw)
+        );
+    }
+
+    const pakaiPagination = keywordSearch.trim() === '';
+    const totalHalaman = pakaiPagination
+        ? Math.ceil(siswa.length / MURID_PER_HALAMAN)
+        : 1;
+
+    let siswaHalaman;
+    if (pakaiPagination) {
+        const start = (halamanSekarang - 1) * MURID_PER_HALAMAN;
+        siswaHalaman = siswa.slice(start, start + MURID_PER_HALAMAN);
+    } else {
+        siswaHalaman = siswa;
+    }
+
+    if (siswaHalaman.length === 0) {
+        grid.innerHTML = `
+            <div class="empty-result">
+                <p>😕 Murid tidak ditemukan</p>
+                <small>Coba kata kunci lain</small>
+            </div>
+        `;
+        document.getElementById('pagination').innerHTML = '';
+        return;
+    }
+
+    grid.innerHTML = siswaHalaman.map((s, i) => {
         const depan = namaDepan(s.nama);
         const inisial = depan.charAt(0).toUpperCase();
         const fotoPath = `img/siswa/${s.username}.jpg`;
@@ -40,6 +76,61 @@ function renderAnggota() {
             </div>
         `;
     }).join('');
+
+    if (pakaiPagination) {
+        renderPagination(totalHalaman);
+    } else {
+        document.getElementById('pagination').innerHTML = '';
+    }
+
+    setTimeout(() => AOS.refresh(), 100);
+}
+
+function setupSearch() {
+    const input = document.getElementById('searchInput');
+    if (!input) return;
+
+    input.addEventListener('input', (e) => {
+        keywordSearch = e.target.value;
+        halamanSekarang = 1;
+        renderAnggota();
+    });
+}
+
+function renderPagination(totalHalaman) {
+    let pagination = document.getElementById('pagination');
+    if (!pagination) return;
+
+    if (totalHalaman <= 1) {
+        pagination.innerHTML = '';
+        return;
+    }
+
+    let html = '';
+
+    html += `<button class="page-btn page-nav" onclick="gantiHalaman(${halamanSekarang - 1})"
+             ${halamanSekarang === 1 ? 'disabled' : ''}>‹ Back</button>`;
+
+    for (let i = 1; i <= totalHalaman; i++) {
+        html += `<button class="page-btn ${i === halamanSekarang ? 'active' : ''}"
+                 onclick="gantiHalaman(${i})">${i}</button>`;
+    }
+
+    html += `<button class="page-btn page-nav" onclick="gantiHalaman(${halamanSekarang + 1})"
+             ${halamanSekarang === totalHalaman ? 'disabled' : ''}>Next ›</button>`;
+
+    pagination.innerHTML = html;
+}
+
+function gantiHalaman(nomor) {
+    const totalHalaman = Math.ceil(appData.siswa.length / MURID_PER_HALAMAN);
+
+    if (nomor < 1 || nomor > totalHalaman) return;
+
+    halamanSekarang = nomor;
+    renderAnggota();
+
+    document.getElementById('anggota').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function bukaFoto(event, src, namaLengkap) {
@@ -92,6 +183,9 @@ document.addEventListener('keydown', (e) => {
 document.addEventListener('DOMContentLoaded', () => {
     renderAnggota();
     renderMomen();
+    renderTentangSlideshow();
+    setupSearch();
+
     AOS.init({
         duration: 800,
         easing: 'ease-out',
@@ -99,5 +193,6 @@ document.addEventListener('DOMContentLoaded', () => {
         offset: 80,
         mirror: false
     });
+
     setTimeout(() => AOS.refresh(), 200);
 });
