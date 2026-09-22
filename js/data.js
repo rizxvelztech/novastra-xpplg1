@@ -31,7 +31,7 @@ function getDefaultData() {
             { id: 28, nama: 'Kiannarra Syahla Quaneisha', username: 'kiannarra', kelas: 'X PPLG 1', instagram: 'kiannarra.sq' },
             { id: 29, nama: 'Livda Laotir Muayis', username: 'livda', kelas: 'X PPLG 1', instagram: 'livda.lm' },
             { id: 30, nama: 'Mahesa Aditya Rama A.', username: 'mahesa', kelas: 'X PPLG 1', instagram: 'mahesa.adty' },
-            { id: 31, nama: "Muhammad Chaikal Alfajri Sa'bani", username: 'chaikal', kelas: 'X PPLG 1', instagram: 'chaikal.alf' },
+            { id: 31, nama: "Muhammad Chaikal Alfajri Sa'bani", username: 'chaikal', kelas: 'X PPLG 1', instagram: 'mhmmdkalls' },
             { id: 32, nama: 'Muhamad Deden Kustian Permadi', username: 'deden', kelas: 'X PPLG 1', instagram: 'muhammad.deden' },
             { id: 33, nama: 'Nabila Qonita Rafitah', username: 'nabila', kelas: 'X PPLG 1', instagram: 'nabila.qn' },
             { id: 34, nama: 'Nadya Putri', username: 'nadya', kelas: 'X PPLG 1', instagram: 'nadya.putri' },
