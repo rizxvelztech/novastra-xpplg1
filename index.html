@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>X PPLG 1 - One Class · One Memory · One Bond</title>
-
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -87,6 +86,16 @@
         <img id="lightboxImg" src="" alt="" onclick="event.stopPropagation()">
         <p class="lightbox-caption" id="lightboxCaption"></p>
     </div>
+
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <button class="music-btn" id="musicBtn" onclick="toggleMusic()" aria-label="Play music">
+        <svg id="musicIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7z"/>
+        </svg>
+    </button>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
