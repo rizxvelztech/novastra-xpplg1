@@ -3,6 +3,8 @@ const daftarMomen = [
     { file: 'momen_2.jpg' },
     { file: 'momen_3.jpg' },
     { file: 'momen_4.jpg' },
+    { file: 'momen_5.jpg' },
+    { file: 'momen_6.jpg' },
 ];
 
 // ==================== SLIDESHOW TENTANG ====================
