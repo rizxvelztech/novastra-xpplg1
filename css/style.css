@@ -99,15 +99,30 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
     border: 3px solid black;
     overflow: hidden;
+    transform-style: preserve-3d;
+    animation: rotate3DGlow 8s linear infinite;
 }
 
 .hero-logo img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+@keyframes rotate3DGlow {
+    0% {
+        transform: rotateY(0deg);
+        box-shadow: 0 0 20px white;
+    }
+    50% {
+        box-shadow: 0 0 60px black;
+    }
+    100% {
+        transform: rotateY(360deg);
+        box-shadow: 0 0 20px white;
+    }
 }
 
 .hero h1 {
