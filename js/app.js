@@ -1,5 +1,5 @@
 let halamanSekarang = 1;
-const MURID_PER_HALAMAN = 8;
+const MURID_PER_HALAMAN = 6;
 let keywordSearch = '';
 
 function renderAnggota() {
