@@ -90,7 +90,7 @@ const CONFIG_KELAS = {
   ],
   instagram: 'novastra.pplg1',
   muridPerHalamanHP: 6,
-  muridPerHalamanDesktop: 15,
+  muridPerHalamanDesktop: 12,
   slideshowInterval: 4000
 };
 
