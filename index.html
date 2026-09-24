@@ -77,17 +77,13 @@
             <div class="divider" data-aos="fade-up" data-aos-delay="100"></div>
 
             <div class="wali-card" data-aos="zoom-in" data-aos-delay="200">
-                <img class="wali-card-bg aktif" src="img/hani.jpg" alt=""
-                     onerror="this.classList.remove('aktif'); this.style.display='none';">
-
                 <div class="wali-foto-wrapper"
                      onclick="bukaFoto(event, 'img/hani.jpg', 'Bu HaniSN')">
                     <div class="wali-foto">
                         <img src="img/hani.jpg" alt="Wali Kelas"
-                             onerror="this.parentElement.innerHTML='H';">
+                             onerror="this.parentElement.innerHTML='H'; this.parentElement.onclick=null;">
                     </div>
                 </div>
-
                 <h3>Bu HaniSN</h3>
                 <p class="wali-jabatan">Wali Kelas XPPLG1</p>
             </div>
