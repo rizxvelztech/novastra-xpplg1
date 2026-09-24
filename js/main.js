@@ -4,7 +4,7 @@ const Novastra = (function() {
   let state = {
     halamanSekarang: 1,
     keywordSearch: '',
-    muridPerHalaman: 12,
+    muridPerHalaman: 15,
     lihatSemua: false
   };
 
