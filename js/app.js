@@ -1,7 +1,17 @@
 let halamanSekarang = 1;
-const MURID_PER_HALAMAN = 6;
 let keywordSearch = '';
 
+// ==================== FUNGSI DINAMIS JUMLAH MURID PER HALAMAN ====================
+function getMuridPerHalaman() {
+    if (window.innerWidth <= 768) {
+        return 6;
+    }
+    return 9999;
+}
+
+let MURID_PER_HALAMAN = getMuridPerHalaman();
+
+// ==================== RENDER ANGGOTA ====================
 function renderAnggota() {
     const grid = document.getElementById('anggotaGrid');
     if (!grid) return;
@@ -43,22 +53,18 @@ function renderAnggota() {
 
     grid.innerHTML = siswaHalaman.map((s, i) => {
         const depan = namaDepan(s.nama);
-        const inisial = depan.charAt(0).toUpperCase();
         const fotoPath = `img/siswa/${s.username}.jpg`;
-        const delay = (i % 8) * 60;
+        const delay = (i % 8) * 30;
 
         return `
             <div class="anggota-card"
                  data-aos="fade-up"
                  data-aos-delay="${delay}"
-                 data-aos-duration="700">
-                <img class="anggota-card-bg aktif" src="${fotoPath}" alt=""
-                     onerror="this.classList.remove('aktif'); this.style.display='none';">
-
+                 data-aos-duration="500">
                 <div class="anggota-foto-wrapper" onclick="bukaFoto(event, '${fotoPath}', '${s.nama}')">
                     <div class="anggota-foto">
-                        <img src="${fotoPath}" alt="${depan}"
-                             onerror="this.parentElement.innerHTML='${inisial}'; this.parentElement.onclick=null;">
+                        <img src="${fotoPath}" alt="${depan}" loading="lazy"
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\\'font-size:0.75rem;color:#ccc;font-style:italic;\\'></span>'; this.parentElement.onclick=null;">
                     </div>
                 </div>
                 <h4 class="anggota-nama">${depan}</h4>
@@ -85,6 +91,7 @@ function renderAnggota() {
     setTimeout(() => AOS.refresh(), 100);
 }
 
+// ==================== SEARCH ====================
 function setupSearch() {
     const input = document.getElementById('searchInput');
     if (!input) return;
@@ -96,6 +103,7 @@ function setupSearch() {
     });
 }
 
+// ==================== PAGINATION ====================
 function renderPagination(totalHalaman) {
     let pagination = document.getElementById('pagination');
     if (!pagination) return;
@@ -132,6 +140,7 @@ function gantiHalaman(nomor) {
     document.getElementById('anggota').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+// ==================== LIGHTBOX FOTO ====================
 function bukaFoto(event, src, namaLengkap) {
     event.stopPropagation();
     const lightbox = document.getElementById('lightbox');
@@ -159,6 +168,7 @@ function tutupFoto() {
     document.body.style.overflow = '';
 }
 
+// ==================== MUSIC ====================
 function toggleMusic() {
     const music = document.getElementById('bgMusic');
     const btn = document.getElementById('musicBtn');
@@ -175,8 +185,18 @@ function toggleMusic() {
     }
 }
 
+// ==================== EVENT LISTENER ====================
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') tutupFoto();
+});
+
+window.addEventListener('resize', () => {
+    const baru = getMuridPerHalaman();
+    if (baru !== MURID_PER_HALAMAN) {
+        MURID_PER_HALAMAN = baru;
+        halamanSekarang = 1;
+        renderAnggota();
+    }
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -186,10 +206,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setupSearch();
 
     AOS.init({
-        duration: 800,
+        duration: 400,
         easing: 'ease-out',
         once: true,
-        offset: 80,
+        offset: 40,
         mirror: false
     });
 

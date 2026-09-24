@@ -1,10 +1,10 @@
 const daftarMomen = [
-    { file: 'momen_1.jpg' },
-    { file: 'momen_2.jpg' },
-    { file: 'momen_3.jpg' },
-    { file: 'momen_4.jpg' },
-    { file: 'momen_5.jpg' },
-    { file: 'momen_6.jpg' },
+    { file: 'momen_1.webp' },
+    { file: 'momen_2.webp' },
+    { file: 'momen_3.webp' },
+    { file: 'momen_4.webp' },
+    { file: 'momen_5.webp' },
+    { file: 'momen_6.webp' },
 ];
 
 // ==================== SLIDESHOW TENTANG ====================
@@ -14,13 +14,11 @@ function renderTentangSlideshow() {
 
     if (daftarMomen.length === 0) return;
 
-    // Buat elemen slide untuk setiap momen
     slideshow.innerHTML = daftarMomen.map((m, i) => `
         <div class="tentang-slide ${i === 0 ? 'active' : ''}"
              style="background-image: url('img/${m.file}');"></div>
     `).join('');
 
-    // Ganti slide setiap 4 detik
     let currentSlide = 0;
     const slides = slideshow.querySelectorAll('.tentang-slide');
 
@@ -28,7 +26,7 @@ function renderTentangSlideshow() {
         slides[currentSlide].classList.remove('active');
         currentSlide = (currentSlide + 1) % slides.length;
         slides[currentSlide].classList.add('active');
-    }, 4000);
+    }, 2000);
 }
 
 function renderMomen() {
