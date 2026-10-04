@@ -3,6 +3,7 @@ const Novastra = (function() {
   let cfg = {};
   let state = {
     halamanSekarang: 1,
+    halamanMomen: 1,
     keywordSearch: '',
     muridPerHalaman: 15,
     lihatSemua: false
@@ -21,6 +22,8 @@ const Novastra = (function() {
     struktur: { ketua: null, wakil: null, sekretaris: [], bendahara: [] },
     siswa: [],
     momen: [],
+    momenMax: 6,
+    ekstensiMomen: 'jpg',
     instagram: '',
     muridPerHalamanHP: 6,
     muridPerHalamanDesktop: 15,
@@ -29,6 +32,14 @@ const Novastra = (function() {
 
   function init(userConfig) {
     cfg = Object.assign({}, DEFAULTS, userConfig);
+
+    if (cfg.momenMax > 0 && cfg.ekstensiMomen) {
+      cfg.momen = [];
+      for (let i = 1; i <= cfg.momenMax; i++) {
+        cfg.momen.push({ file: `momen_${i}.${cfg.ekstensiMomen}` });
+      }
+    }
+
     state.muridPerHalaman = getMuridPerHalaman();
     renderAll();
     setupSearch();
@@ -52,7 +63,14 @@ const Novastra = (function() {
 
   function initAOS() {
     if (typeof AOS === 'undefined') return;
-    AOS.init({ duration: 400, easing: 'ease-out', once: false, offset: 40, mirror: false });
+    AOS.init({
+      duration: 300,
+      easing: 'ease-out',
+      once: true,
+      offset: 50,
+      mirror: false,
+      disable: 'mobile'
+    });
     setTimeout(() => AOS.refresh(), 200);
   }
 
@@ -82,10 +100,10 @@ const Novastra = (function() {
 
   function renderHero() {
     const heroImg = cfg.heroImage
-      ? `<img src="${cfg.heroImage}" alt="Hero" class="hero-bg" onerror="this.style.display='none'">` : '';
+      ? `<img src="${cfg.heroImage}" alt="" class="hero-bg" onerror="this.style.display='none'">` : '';
 
     const logo = cfg.logoKelas
-      ? `<img src="${cfg.logoKelas}" alt="Logo" onerror="this.style.display='none'">`
+      ? `<img src="${cfg.logoKelas}" alt="" onerror="this.style.display='none'">`
       : `<span style="font-size:3rem;color:#1e3c72;">${cfg.namaKelas.charAt(0)}</span>`;
 
     return `
@@ -93,9 +111,9 @@ const Novastra = (function() {
         ${heroImg}
         <div class="hero-overlay"></div>
         <div class="hero-content">
-          <div class="hero-logo" data-aos="zoom-in" data-aos-duration="1000">${logo}</div>
-          <h1 data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">${cfg.namaKelas}</h1>
-          <p class="tagline" data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">${cfg.tagline}</p>
+          <div class="hero-logo" data-aos="zoom-in" data-aos-duration="800">${logo}</div>
+          <h1 data-aos="fade-up" data-aos-delay="150" data-aos-duration="800">${cfg.namaKelas}</h1>
+          <p class="tagline" data-aos="fade-up" data-aos-delay="300" data-aos-duration="800">${cfg.tagline}</p>
         </div>
         <div class="scroll-indicator" onclick="document.getElementById('tentang').scrollIntoView({behavior:'smooth'})">⌄</div>
       </section>
@@ -113,8 +131,8 @@ const Novastra = (function() {
         <div class="tentang-overlay"></div>
         <div class="tentang-content">
           <h2 class="section-heading tentang-heading" data-aos="fade-up">${cfg.tentang.judul}</h2>
-          <p class="tentang-text" data-aos="fade-up" data-aos-delay="200">${cfg.tentang.deskripsi}</p>
-          <div class="tentang-stats" data-aos="fade-up" data-aos-delay="300">${stats}</div>
+          <p class="tentang-text" data-aos="fade-up" data-aos-delay="150">${cfg.tentang.deskripsi}</p>
+          <div class="tentang-stats" data-aos="fade-up" data-aos-delay="250">${stats}</div>
         </div>
       </section>
     `;
@@ -124,7 +142,9 @@ const Novastra = (function() {
     const el = document.getElementById('tentangSlideshow');
     if (!el || cfg.momen.length === 0) return;
 
-    el.innerHTML = cfg.momen.map((m, i) =>
+    const momenTerbaru = cfg.momen.slice(-6);
+
+    el.innerHTML = momenTerbaru.map((m, i) =>
       `<div class="tentang-slide ${i === 0 ? 'active' : ''}" style="background-image: url('img/${m.file}');"></div>`
     ).join('');
 
@@ -140,13 +160,12 @@ const Novastra = (function() {
 
   function strukturNode(item, extraClass = '') {
     if (!item) return '';
-    const foto = `img/siswa/${item.username}.jpg`;
+    const foto = `img/siswa/${item.username}.webp`;
     return `
       <div class="struktur-node ${extraClass}">
         <div class="struktur-foto-wrapper" onclick="Novastra.bukaFoto(event, '${foto}', '${item.nama}')">
           <div class="struktur-foto">
-            <img src="${foto}" alt="${item.nama}" loading="lazy"
-              onerror="this.style.display='none'; this.parentElement.innerHTML=''; this.parentElement.onclick=null;">
+            <img src="${foto}" alt="" loading="lazy" onerror="this.style.display='none';">
           </div>
         </div>
         <div class="struktur-info">
@@ -165,8 +184,7 @@ const Novastra = (function() {
       <div class="struktur-node struktur-node-wali">
         <div class="struktur-foto-wrapper" onclick="Novastra.bukaFoto(event, '${cfg.waliKelas.foto}', '${cfg.waliKelas.nama}')">
           <div class="struktur-foto">
-            <img src="${cfg.waliKelas.foto}" alt="${cfg.waliKelas.nama}"
-              onerror="this.parentElement.innerHTML=''; this.parentElement.onclick=null;">
+            <img src="${cfg.waliKelas.foto}" alt="" onerror="this.style.display='none';">
           </div>
         </div>
         <div class="struktur-info">
@@ -184,7 +202,7 @@ const Novastra = (function() {
         <h2 class="section-heading" data-aos="fade-up">Struktur Kelas</h2>
         <div class="divider" data-aos="fade-up" data-aos-delay="100"></div>
 
-        <div class="struktur-chart" data-aos="fade-up" data-aos-delay="200">
+        <div class="struktur-chart" data-aos="fade-up" data-aos-delay="150">
           <div class="struktur-row struktur-row-top">${wali}</div>
           <div class="struktur-connector-v"></div>
 
@@ -226,7 +244,7 @@ const Novastra = (function() {
     return `
       <section class="section" id="anggota">
         <h2 class="section-heading" data-aos="fade-up">Anggota Kelas</h2>
-        <div class="search-wrapper" data-aos="fade-up" data-aos-delay="150">
+        <div class="search-wrapper" data-aos="fade-up" data-aos-delay="100">
           <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
@@ -273,17 +291,15 @@ const Novastra = (function() {
       return;
     }
 
-    grid.innerHTML = siswaHalaman.map((s, i) => {
+    grid.innerHTML = siswaHalaman.map((s) => {
       const depan = namaPendek(s.nama);
-      const foto = `img/siswa/${s.username}.jpg`;
-      const delay = (i % 8) * 30;
+      const foto = `img/siswa/${s.username}.webp`;
 
       return `
-        <div class="anggota-card" data-aos="fade-up" data-aos-delay="${delay}" data-aos-duration="500">
+        <div class="anggota-card">
           <div class="anggota-foto-wrapper" onclick="Novastra.bukaFoto(event, '${foto}', '${s.nama}')">
             <div class="anggota-foto">
-              <img src="${foto}" alt="${depan}" loading="lazy"
-                onerror="this.style.display='none'; this.parentElement.innerHTML=''; this.parentElement.onclick=null;">
+              <img src="${foto}" alt="" loading="lazy" onerror="this.style.display='none';">
             </div>
           </div>
           <h4 class="anggota-nama">${depan}</h4>
@@ -359,6 +375,7 @@ const Novastra = (function() {
       <section class="section" id="momen">
         <h2 class="section-heading" data-aos="fade-up">Momen Bersama</h2>
         <div class="momen-grid" id="momenGrid"></div>
+        <div class="pagination" id="momenPagination"></div>
       </section>
     `;
   }
@@ -367,24 +384,62 @@ const Novastra = (function() {
     const grid = document.getElementById('momenGrid');
     if (!grid) return;
 
-    grid.innerHTML = cfg.momen.map((m, i) => {
-      const animasi = ['fade-up', 'zoom-in'][i % 2];
-      const delay = (i % 6) * 80;
+    const perHalaman = 6;
+    const totalHalaman = Math.ceil(cfg.momen.length / perHalaman);
+
+    const semuaMomen = [...cfg.momen].reverse();
+    const start = (state.halamanMomen - 1) * perHalaman;
+    const momenHalaman = semuaMomen.slice(start, start + perHalaman);
+
+    grid.innerHTML = momenHalaman.map((m) => {
       return `
-        <div class="momen-item" data-aos="${animasi}" data-aos-delay="${delay}" data-aos-duration="800"
-          onclick="Novastra.bukaFoto(event, 'img/${m.file}', '')">
-          <img src="img/${m.file}" alt="Momen" loading="lazy" onerror="this.style.display='none';">
+        <div class="momen-item" onclick="Novastra.bukaFoto(event, 'img/${m.file}', '')">
+          <img src="img/${m.file}" alt="" loading="eager" onerror="this.style.display='none';">
         </div>
       `;
     }).join('');
+
+    renderMomenPagination(totalHalaman);
+  }
+
+  function renderMomenPagination(totalHalaman) {
+    const pag = document.getElementById('momenPagination');
+    if (!pag) return;
+
+    if (totalHalaman <= 1) {
+      pag.innerHTML = '';
+      return;
+    }
+
+    let html = `<button class="page-btn page-nav" onclick="Novastra.gantiHalamanMomen(${state.halamanMomen - 1})"
+      ${state.halamanMomen === 1 ? 'disabled' : ''}>‹ Back</button>`;
+
+    for (let i = 1; i <= totalHalaman; i++) {
+      html += `<button class="page-btn ${i === state.halamanMomen ? 'active' : ''}"
+        onclick="Novastra.gantiHalamanMomen(${i})">${i}</button>`;
+    }
+
+    html += `<button class="page-btn page-nav" onclick="Novastra.gantiHalamanMomen(${state.halamanMomen + 1})"
+      ${state.halamanMomen === totalHalaman ? 'disabled' : ''}>Next ›</button>`;
+
+    pag.innerHTML = html;
+  }
+
+  function gantiHalamanMomen(nomor) {
+    const total = Math.ceil(cfg.momen.length / 6);
+    if (nomor < 1 || nomor > total) return;
+
+    state.halamanMomen = nomor;
+    renderMomen();
+    document.getElementById('momen').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   function renderCTA() {
     return `
-      <section class="section cta-section">
+      <section class="section cta-section" id="about">
         <p class="cta-text" data-aos="fade-up">About?</p>
         <a href="https://instagram.com/${cfg.instagram}" target="_blank" class="btn-instagram"
-          data-aos="zoom-in" data-aos-delay="200">
+          data-aos="zoom-in" data-aos-delay="150">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
             fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
@@ -513,6 +568,7 @@ const Novastra = (function() {
     tutupFoto,
     toggleMusic,
     gantiHalaman,
+    gantiHalamanMomen,
     lihatSemua,
     renderAnggota,
     getConfig: () => cfg,

@@ -2,8 +2,8 @@ const CONFIG_KELAS = {
   container: '#app',
   namaKelas: 'X PPLG 1',
   tagline: 'ONE CLASS · ONE MEMORY · ONE BOND',
-  heroImage: 'img/hero.jpg',
-  logoKelas: 'img/logo_kelas.jpg',
+  heroImage: 'img/hero.webp',
+  logoKelas: 'img/logo_kelas.webp',
   backgroundSection: 'img/bg.webp',
   musik: 'music.mp3',
   tentang: {
@@ -18,7 +18,7 @@ const CONFIG_KELAS = {
   waliKelas: {
     nama: 'Bu HaniSN',
     jabatan: 'Wali Kelas XPPLG1',
-    foto: 'img/hani.jpg'
+    foto: 'img/hani.webp'
   },
   struktur: {
     ketua: { jabatan: 'Ketua Kelas', username: 'deden', nama: 'Deden Kustian.P' },
@@ -34,7 +34,7 @@ const CONFIG_KELAS = {
   },
   siswa: [
     { nama: 'Abid Jaenal Arifin', username: 'abid', instagram: 'abid.jaenal' },
-    { nama: 'Adnan Setiawan', username: 'adnan', instagram: 'adnan.stwn' },
+    { nama: 'Adnan Setiawan', username: 'adnan', instagram: 'itz.4nan' },
     { nama: 'Afrizal Maulana Herwanto', username: 'afrizal', instagram: 'afrizal_m.h' },
     { nama: 'Ahlan Walid Abqary', username: 'ahlan', instagram: 'ahlan.walid' },
     { nama: 'Albian Ramadhan Kusuma', username: 'albian', instagram: 'albian.rk' },
@@ -80,14 +80,11 @@ const CONFIG_KELAS = {
     { nama: 'Vida Rahmah', username: 'vida', instagram: 'vida.rahmah' },
     { nama: 'Wahyu Apriansyah', username: 'wahyu', instagram: 'wahyu.apr' }
   ],
-  momen: [
-    { file: 'momen_1.webp' },
-    { file: 'momen_2.webp' },
-    { file: 'momen_3.webp' },
-    { file: 'momen_4.webp' },
-    { file: 'momen_5.webp' },
-    { file: 'momen_6.webp' }
-  ],
+
+  // 🔥 Cukup ubah angka ini kalau nambah foto momen
+  momenMax: 15,              // jumlah foto momen (momen_1 s/d momen_6)
+  ekstensiMomen: 'jpg',     // ekstensi file (jpg / webp / png)
+
   instagram: 'novastra.pplg1',
   muridPerHalamanHP: 6,
   muridPerHalamanDesktop: 12,
