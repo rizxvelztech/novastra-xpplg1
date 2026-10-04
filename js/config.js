@@ -82,7 +82,7 @@ const CONFIG_KELAS = {
   ],
 
   // 🔥 Cukup ubah angka ini kalau nambah foto momen
-  momenMax: 15,              // jumlah foto momen (momen_1 s/d momen_6)
+  momenMax: 18,              // jumlah foto momen (momen_1 s/d momen_6)
   ekstensiMomen: 'jpg',     // ekstensi file (jpg / webp / png)
 
   instagram: 'novastra.pplg1',
