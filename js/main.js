@@ -64,12 +64,12 @@ const Novastra = (function() {
   function initAOS() {
     if (typeof AOS === 'undefined') return;
     AOS.init({
-      duration: 300,
+      duration: 400,
       easing: 'ease-out',
-      once: true,
-      offset: 50,
-      mirror: false,
-      disable: 'mobile'
+      once: false,             // 🔥 animasi jalan terus
+      mirror: true,            // 🔥 replay saat scroll balik
+      offset: 60,
+      disable: false           // 🔥 aktif di HP juga
     });
     setTimeout(() => AOS.refresh(), 200);
   }
@@ -162,7 +162,7 @@ const Novastra = (function() {
     if (!item) return '';
     const foto = `img/siswa/${item.username}.webp`;
     return `
-      <div class="struktur-node ${extraClass}">
+      <div class="struktur-node ${extraClass}" data-aos="fade-up" data-aos-duration="400">
         <div class="struktur-foto-wrapper" onclick="Novastra.bukaFoto(event, '${foto}', '${item.nama}')">
           <div class="struktur-foto">
             <img src="${foto}" alt="" loading="lazy" onerror="this.style.display='none';">
@@ -181,7 +181,7 @@ const Novastra = (function() {
     if (!s || (!s.ketua && !s.wakil)) return '';
 
     const wali = `
-      <div class="struktur-node struktur-node-wali">
+      <div class="struktur-node struktur-node-wali" data-aos="zoom-in" data-aos-duration="500">
         <div class="struktur-foto-wrapper" onclick="Novastra.bukaFoto(event, '${cfg.waliKelas.foto}', '${cfg.waliKelas.nama}')">
           <div class="struktur-foto">
             <img src="${cfg.waliKelas.foto}" alt="" onerror="this.style.display='none';">
@@ -291,12 +291,13 @@ const Novastra = (function() {
       return;
     }
 
-    grid.innerHTML = siswaHalaman.map((s) => {
+    grid.innerHTML = siswaHalaman.map((s, i) => {
       const depan = namaPendek(s.nama);
       const foto = `img/siswa/${s.username}.webp`;
+      const delay = (i % 6) * 50;
 
       return `
-        <div class="anggota-card">
+        <div class="anggota-card" data-aos="fade-up" data-aos-delay="${delay}" data-aos-duration="400">
           <div class="anggota-foto-wrapper" onclick="Novastra.bukaFoto(event, '${foto}', '${s.nama}')">
             <div class="anggota-foto">
               <img src="${foto}" alt="" loading="lazy" onerror="this.style.display='none';">
@@ -331,7 +332,7 @@ const Novastra = (function() {
       pagination.innerHTML = '';
     }
 
-    setTimeout(() => AOS.refresh(), 100);
+    if (typeof AOS !== 'undefined') AOS.refresh();
   }
 
   function renderPagination(totalHalaman) {
@@ -391,15 +392,20 @@ const Novastra = (function() {
     const start = (state.halamanMomen - 1) * perHalaman;
     const momenHalaman = semuaMomen.slice(start, start + perHalaman);
 
-    grid.innerHTML = momenHalaman.map((m) => {
+    grid.innerHTML = momenHalaman.map((m, i) => {
+      const animasi = ['fade-up', 'zoom-in'][i % 2];
+      const delay = (i % 6) * 60;
       return `
-        <div class="momen-item" onclick="Novastra.bukaFoto(event, 'img/${m.file}', '')">
+        <div class="momen-item" data-aos="${animasi}" data-aos-delay="${delay}" data-aos-duration="500"
+          onclick="Novastra.bukaFoto(event, 'img/${m.file}', '')">
           <img src="img/${m.file}" alt="" loading="eager" onerror="this.style.display='none';">
         </div>
       `;
     }).join('');
 
     renderMomenPagination(totalHalaman);
+
+    if (typeof AOS !== 'undefined') AOS.refresh();
   }
 
   function renderMomenPagination(totalHalaman) {
