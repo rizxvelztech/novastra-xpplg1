@@ -30,7 +30,68 @@ const Novastra = (function() {
     slideshowInterval: 4000
   };
 
-  function init(userConfig) {
+  const fotoCache = {};
+
+  function cekFotoAda(src) {
+    return new Promise(resolve => {
+      if (src in fotoCache) return resolve(fotoCache[src]);
+      const img = new Image();
+      img.onload = () => { fotoCache[src] = true; resolve(true); };
+      img.onerror = () => { fotoCache[src] = false; resolve(false); };
+      img.src = src;
+    });
+  }
+
+  async function filterSiswaYangAdaFotonya(daftar) {
+    const hasil = await Promise.all(
+      daftar.map(async s => {
+        const foto = `img/siswa/${s.username}.webp`;
+        const ada = await cekFotoAda(foto);
+        return ada ? s : null;
+      })
+    );
+    return hasil.filter(Boolean);
+  }
+
+  async function filterStrukturYangAdaFotonya() {
+    const s = cfg.struktur;
+
+    if (cfg.waliKelas && cfg.waliKelas.foto) {
+      const ada = await cekFotoAda(cfg.waliKelas.foto);
+      if (!ada) cfg.waliKelas = null;
+    }
+
+    if (s.ketua) {
+      const ada = await cekFotoAda(`img/siswa/${s.ketua.username}.webp`);
+      if (!ada) s.ketua = null;
+    }
+    if (s.wakil) {
+      const ada = await cekFotoAda(`img/siswa/${s.wakil.username}.webp`);
+      if (!ada) s.wakil = null;
+    }
+
+    if (Array.isArray(s.sekretaris)) {
+      const filtered = await Promise.all(
+        s.sekretaris.map(async x => {
+          const ada = await cekFotoAda(`img/siswa/${x.username}.webp`);
+          return ada ? x : null;
+        })
+      );
+      s.sekretaris = filtered.filter(Boolean);
+    }
+
+    if (Array.isArray(s.bendahara)) {
+      const filtered = await Promise.all(
+        s.bendahara.map(async x => {
+          const ada = await cekFotoAda(`img/siswa/${x.username}.webp`);
+          return ada ? x : null;
+        })
+      );
+      s.bendahara = filtered.filter(Boolean);
+    }
+  }
+
+  async function init(userConfig) {
     cfg = Object.assign({}, DEFAULTS, userConfig);
 
     if (cfg.momenMax > 0 && cfg.ekstensiMomen) {
@@ -39,6 +100,9 @@ const Novastra = (function() {
         cfg.momen.push({ file: `momen_${i}.${cfg.ekstensiMomen}` });
       }
     }
+
+    cfg.siswa = await filterSiswaYangAdaFotonya(cfg.siswa);
+    await filterStrukturYangAdaFotonya();
 
     state.muridPerHalaman = getMuridPerHalaman();
     renderAll();
@@ -66,10 +130,10 @@ const Novastra = (function() {
     AOS.init({
       duration: 400,
       easing: 'ease-out',
-      once: false,             // 🔥 animasi jalan terus
-      mirror: true,            // 🔥 replay saat scroll balik
+      once: false,
+      mirror: true,
       offset: 60,
-      disable: false           // 🔥 aktif di HP juga
+      disable: false
     });
     setTimeout(() => AOS.refresh(), 200);
   }
@@ -180,7 +244,7 @@ const Novastra = (function() {
     const s = cfg.struktur;
     if (!s || (!s.ketua && !s.wakil)) return '';
 
-    const wali = `
+    const wali = cfg.waliKelas ? `
       <div class="struktur-node struktur-node-wali" data-aos="zoom-in" data-aos-duration="500">
         <div class="struktur-foto-wrapper" onclick="Novastra.bukaFoto(event, '${cfg.waliKelas.foto}', '${cfg.waliKelas.nama}')">
           <div class="struktur-foto">
@@ -192,7 +256,7 @@ const Novastra = (function() {
           <h4 class="struktur-nama">${cfg.waliKelas.nama}</h4>
         </div>
       </div>
-    `;
+    ` : '';
 
     const sekretaris = (s.sekretaris || []).map(x => strukturNode(x)).join('');
     const bendahara = (s.bendahara || []).map(x => strukturNode(x)).join('');
